@@ -1,0 +1,24 @@
+{
+    "name": "websvc/yii2-acl",
+    "description": "Yii2 Extension to provide management of ACL's for user groups and users. Also allows menu building based on ACL",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Websvc",
+            "homepage": "https://websvcpt.github.io/yii2-acl/"
+        }
+    ],
+    "require": {
+        "php": "5.6",
+        "yiisoft/yii2": "^2.0"
+    },
+    "require-dev": {
+        "yiisoft/yii2-coding-standards": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "websvc\\acl\\": ""
+        }
+    }
+}

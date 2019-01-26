@@ -12,11 +12,10 @@ namespace websvc\acl;
 
 
 /**
- * 
+ *
  *
  * @author Nelson Dias
  */
-class Acl
+class SysAcl
 {
-
 }

@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace websvc\acl;
+namespace WebsvcAcl;
 
 use Yii;
 use yii\base\Component;
@@ -18,7 +18,7 @@ use yii\base\Component;
  *
  * @author Nelson Dias
  */
-class Acl extends Component
+class Manager extends Component
 {
     /**
      * Use user session
@@ -27,6 +27,10 @@ class Acl extends Component
     public $useUserSession = false;
 
 
+    public function __construct($config = array()) {
+        echo 'hello';
+        parent::__construct($config);
+    }
 
     /**
      * For debug purpose - Display user ACLs

@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace websvc\acl\models;
+namespace WebsvcAcl\models;
 
 use Yii;
 

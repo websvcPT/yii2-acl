@@ -10,12 +10,29 @@
 
 namespace websvc\acl;
 
+use Yii;
+use yii\base\Component;
 
 /**
  *
  *
  * @author Nelson Dias
  */
-class SysAcl
+class Acl extends Component
 {
+    /**
+     * Use user session
+     * @var boolean
+     */
+    public $useUserSession = false;
+
+
+
+    /**
+     * For debug purpose - Display user ACLs
+     */
+    public static function dumpUserACL($id)
+    {
+    }
+
 }

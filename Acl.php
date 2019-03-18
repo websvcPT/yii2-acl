@@ -18,7 +18,7 @@ use yii\base\Component;
  *
  * @author Nelson Dias
  */
-class Manager extends Component
+class Acl extends Component
 {
     /**
      * Use user session

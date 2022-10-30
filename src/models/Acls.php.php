@@ -2,7 +2,7 @@
 /**
  * This file is part of the Acl package.
  *
- * (c) Nelson Dias - WebsvcPT
+ * (c) WebsvcPT
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -13,11 +13,10 @@ namespace websvc\acl\models;
 use Yii;
 
 /**
- * This is the model class for table "w_acls".
+ * This is the model class for table "sys_acls".
  *
  * @property int $id
  * @property int $status
- * @property string $created_at
  * @property int $module_id
  * @property int $parent_id
  * @property string $controlleraction
@@ -28,6 +27,7 @@ use Yii;
  * @property int $pos
  * @property string $css_class
  * @property string $user_function PUF=php user function
+ * @property string $created_at
  */
 class Acls extends \yii\db\ActiveRecord
 {
@@ -36,7 +36,7 @@ class Acls extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'w_acls';
+        return 'sys_acls';
     }
 
     /**
@@ -64,7 +64,6 @@ class Acls extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'status' => Yii::t('app', 'Status'),
-            'created_at' => Yii::t('app', 'Created At'),
             'module_id' => Yii::t('app', 'Module ID'),
             'parent_id' => Yii::t('app', 'Parent ID'),
             'controlleraction' => Yii::t('app', 'Controlleraction'),
@@ -75,6 +74,7 @@ class Acls extends \yii\db\ActiveRecord
             'pos' => Yii::t('app', 'Pos'),
             'css_class' => Yii::t('app', 'Css Class'),
             'user_function' => Yii::t('app', 'Function'),
+            'created_at' => Yii::t('app', 'Created At'),
         ];
     }
 }

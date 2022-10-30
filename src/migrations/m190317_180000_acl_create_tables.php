@@ -1,5 +1,6 @@
 <?php
 
+use Yii;
 use yii\db\Migration;
 
 /**
@@ -16,11 +17,10 @@ class m190317_180000_acl_create_tables extends Migration
         }
 
         // Modules
-        $this->createTable('{{%w_modules}}',
+        $this->createTable('{{%sys_modules}}',
             [
             'id' => $this->primaryKey(),
             'status' => $this->smallInteger()->notNull()->defaultValue('1'),
-            'created_at' => $this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),
             'name' => $this->string()->notNull(),
             'yii_module_id' => $this->string()->notNull(),
             'url' => $this->string()->null(),
@@ -28,23 +28,23 @@ class m190317_180000_acl_create_tables extends Migration
             'icon' => $this->string()->null(),
             'css_class' => $this->string()->null(),
             'pos' => $this->integer()->notNull(),
+            'created_at' => $this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),
             ], $tableOptions);
 
-        $this->createIndex('m_name', '{{%w_modules}}', 'name');
+        $this->createIndex('m_name', '{{%sys_modules}}', 'name');
 
         // Add default Modules
-        $this->batchInsert('w_modules',
+        $this->batchInsert('sys_modules',
             ['id', 'status', 'name', 'yii_module_id', 'url', 'logo', 'icon', 'css_class', 'pos'],
             [
                 [1, 1, 'Home', 'app-backend', 'site', null, null, null, 1],
             ]
         );
 
-        $this->createTable('{{%w_acls}}',
+        $this->createTable('{{%sys_acls}}',
             [
             'id' => $this->primaryKey(),
             'status' => $this->smallInteger()->notNull()->defaultValue('1'),
-            'created_at' => $this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),
             'module_id' => $this->integer()->notNull(),
             'parent_id' => $this->integer()->null(),
             'controlleraction' => $this->string()->notNull(),
@@ -55,12 +55,13 @@ class m190317_180000_acl_create_tables extends Migration
             'pos' => $this->integer(),
             'css_class' => $this->string(),
             'user_function' => $this->string()->null()->comment('PUF=php user function'),
+            'created_at' => $this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),
             ], $tableOptions);
 
-        $this->createIndex('sortindex', '{{%w_acls}}', ['module_id', 'parent_id', 'type']);
+        $this->createIndex('sortindex', '{{%sys_acls}}', ['module_id', 'parent_id', 'type']);
 
         // Add default ACLs
-        $this->batchInsert('w_acls',
+        $this->batchInsert('sys_acls',
             [
                 'id', 'status', 'module_id', 'parent_id', 'controlleraction', 'type',
                 'name', 'url', 'description', 'pos', 'css_class', 'user_function'
@@ -87,7 +88,7 @@ class m190317_180000_acl_create_tables extends Migration
         );
 
         // ACL Types
-        $this->createTable('{{%w_acl_types}}',
+        $this->createTable('{{%sys_acl_types}}',
             [
             'id' => $this->primaryKey(),
             'name' => $this->string()->notNull(),
@@ -95,7 +96,7 @@ class m190317_180000_acl_create_tables extends Migration
             ], $tableOptions);
 
         // Add Types
-        $this->batchInsert('w_acl_types', ['id', 'name', 'description'], [
+        $this->batchInsert('sys_acl_types', ['id', 'name', 'description'], [
             [1, 'Module', 'Main menu item'],
             [2, 'Level 1', 'Level 1 menu item'],
             [3, 'Level 2', 'Level 2 menu item'],
@@ -105,17 +106,17 @@ class m190317_180000_acl_create_tables extends Migration
         );
 
         // User groups
-        $this->createTable('{{%w_groups}}',
+        $this->createTable('{{%sys_groups}}',
             [
             'id' => $this->primaryKey(),
             'status' => $this->smallInteger()->notNull()->defaultValue('1'),
-            'created_at' => $this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),
             'name' => $this->string()->notNull(),
-            'level' => $this->integer()->notNull()->defaultValue('1')->comment('Higher is more power'),
+            'level' => $this->integer()->notNull()->defaultValue('1')->comment('Higher means more power'),
+            'created_at' => $this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),
             ], $tableOptions);
 
         // Add default Groups
-        $this->batchInsert('w_groups', ['id', 'status', 'name', 'level'], [
+        $this->batchInsert('sys_groups', ['id', 'status', 'name', 'level'], [
             [1, 1, 'Developer', 100],
             [2, 1, 'Administrator', 70],
             [3, 1, 'User', 50],
@@ -123,30 +124,41 @@ class m190317_180000_acl_create_tables extends Migration
         );
 
         // ACL assigned to Groups
-        $this->createTable('{{%w_group_acls}}',
+        $this->createTable(
+            '{{%sys_group_acls}}',
             [
-            'id' => $this->primaryKey(),
-            'group_id' => $this->integer()->notNull(),
-            'acl_id' => $this->integer()->notNull(),
-            ], $tableOptions);
+                'id' => $this->primaryKey(),
+                'group_id' => $this->integer()->notNull(),
+                'acl_id' => $this->integer()->notNull(),
+            ],
+            $tableOptions
+        );
 
         // Add ACLS to Developer Group
-        $this->batchInsert('w_group_acls', ['group_id', 'acl_id'], [
-            [1, 1],
-            [1, 2],
-            [1, 3],
-            [1, 4],
+        $this->batchInsert(
+            'sys_group_acls',
+            ['group_id', 'acl_id'],
+            [
+                [1, 1],
+                [1, 2],
+                [1, 3],
+                [1, 4],
             ]
         );
 
         // ACL assigned to Users
-        $this->createTable('{{%w_user_acls}}',
+        $this->createTable(
+            '{{%sys_user_acls}}',
             [
-            'id' => $this->primaryKey(),
-            'user_id' => $this->integer()->notNull(),
-            'acl_id' => $this->integer()->notNull(),
-            'mode' => $this->smallInteger()->notNull()->defaultValue('1')->comment('1=add privileges;0=revoke privileges'),
-            ], $tableOptions);
+                'id' => $this->primaryKey(),
+                'user_id' => $this->integer()->notNull(),
+                'acl_id' => $this->integer()->notNull(),
+                'mode' => $this->smallInteger()->notNull()->defaultValue('1')->comment(
+                    '1=add privileges;0=revoke privileges'
+                ),
+            ],
+            $tableOptions
+        );
 
         // Add group_id column to user table
         $table = Yii::$app->db->schema->getTableSchema('user');
@@ -157,12 +169,11 @@ class m190317_180000_acl_create_tables extends Migration
 
     public function down()
     {
-        $this->dropTable('{{%w_modules}}');
-        $this->dropTable('{{%w_acls}}');
-        $this->dropTable('{{%w_groups}}');
-        $this->dropTable('{{%w_group_acls}}');
-        $this->dropTable('{{%w_user_acls}}');
+        $this->dropTable('{{%sys_modules}}');
+        $this->dropTable('{{%sys_acls}}');
+        $this->dropTable('{{%sys_groups}}');
+        $this->dropTable('{{%sys_group_acls}}');
+        $this->dropTable('{{%sys_user_acls}}');
         $this->dropColumn('user', 'group_id');
     }
-
 }

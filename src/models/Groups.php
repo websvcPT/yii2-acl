@@ -2,7 +2,7 @@
 /**
  * This file is part of the Acl package.
  *
- * (c) Nelson Dias - WebsvcPT
+ * (c) WebsvcPT
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -13,13 +13,13 @@ namespace websvc\acl\models;
 use Yii;
 
 /**
- * This is the model class for table "w_groups".
+ * This is the model class for table "sys_groups".
  *
  * @property int $id
  * @property int $status
- * @property string $created_at
  * @property string $name
- * @property int $level Higher is more power
+ * @property int $level Higher means more power
+ * @property string $created_at
  */
 class Groups extends \yii\db\ActiveRecord
 {
@@ -28,7 +28,7 @@ class Groups extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'w_groups';
+        return 'sys_groups';
     }
 
     /**
@@ -52,9 +52,9 @@ class Groups extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'status' => Yii::t('app', 'Status'),
-            'created_at' => Yii::t('app', 'Created At'),
             'name' => Yii::t('app', 'Name'),
             'level' => Yii::t('app', 'Level'),
+            'created_at' => Yii::t('app', 'Created At'),
         ];
     }
 }

@@ -2,7 +2,7 @@
 /**
  * This file is part of the Acl package.
  *
- * (c) Nelson Dias - WebsvcPT
+ * (c) WebsvcPT
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -28,7 +28,6 @@ class Acl extends Component
 
 
     public function __construct($config = array()) {
-        echo 'hello';
         parent::__construct($config);
     }
 
